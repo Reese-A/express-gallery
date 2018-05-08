@@ -68,9 +68,8 @@ router.route('/:id')
       })
       .fetch()
       .then((detail) => {
-        console.log(detail);
-
         const mainCard = detail.attributes;
+
         return Gallery.query((qb) => {
             qb.limit(3);
           })
@@ -95,8 +94,30 @@ router.route('/:id')
       })
       .destroy()
       .then((gallery) => {
-        return res.json(gallery);
+        return res.redirect('/gallery');
+      })
+      .catch((err)=>{
+        if(err.message === 'No Rows Deleted'){
+          return res.status(404).json({message: messages.notFound});
+        }else{
+          return res.status(500).json({message: messages.internalServer});
+        }
       })
   })
 
+router.route('/:id/edit')
+  .get((req, res) =>{
+    const id = req.params.id;
+
+    return new Gallery()
+      .where({
+        id: id
+      })
+      .fetch()
+      .then((gallery) =>{
+        const data = gallery.attributes;
+
+        return res.render('gallery/edit', data);
+      })
+  })
 module.exports = router;
