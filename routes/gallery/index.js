@@ -22,16 +22,16 @@ router.route('/')
     author = author.trim();
     link = link.trim();
     description = description.trim();
-    
+
     validateRequest([author, link, description], res, messages.badRequest);
-    
+
     return new Gallery({
-      author,
-      link,
-      description
-    })
-    .save()
-    .then((gallery) => {
+        author,
+        link,
+        description
+      })
+      .save()
+      .then((gallery) => {
         return res.redirect('/gallery');
       })
       .catch((err) => {
@@ -61,20 +61,21 @@ router.route('/')
 router.route('/:id')
   .get((req, res) => {
     const id = req.params.id;
-    console.log('firecheck');
+
     return new Gallery()
       .where({
         id: id
       })
       .fetch()
       .then((detail) => {
+        console.log(detail);
+
         const mainCard = detail.attributes;
         return Gallery.query((qb) => {
             qb.limit(3);
           })
           .fetchAll()
           .then((listing) => {
-            console.log(listing);
             const listingCards = listing.models.map((curr) => {
               return curr.attributes;
             })
@@ -83,6 +84,18 @@ router.route('/:id')
               listing: listingCards,
             })
           })
+      })
+  })
+
+  .delete((req, res) => {
+    const id = req.params.id;
+
+    return new Gallery({
+        id: id
+      })
+      .destroy()
+      .then((gallery) => {
+        return res.json(gallery);
       })
   })
 

@@ -16,4 +16,7 @@
     </div>
     {{/each}}
   </div>
+    <form action="/gallery/{{mainCard.id}}?_method=DELETE" method="POST">
+      <button type="submit">DELETE</button>
+    </form>
 </div>
