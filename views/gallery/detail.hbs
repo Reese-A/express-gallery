@@ -1,0 +1,19 @@
+<div id="detailWrap">
+  <div id="detailCard">
+    <div id="detailAuthor">{{mainCard.author}}</div>
+    <img src="{{mainCard.link}}" alt="" id="detailImage">
+    <div id="detailDescription">{{mainCard.description}}</div>
+    <div id="detailLink">Copyright {{mainCard.link}}</div>
+  </div>
+  <div id="listingWrap">
+    {{#each listing}}
+    <div class="detailCard">
+      <img src="{{link}}" alt="" class="detailImage">
+      <div class="detailText">
+        <div class="detailAuthor">{{author}}</div>
+        <div class="detailLink">{{link}}</div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
