@@ -28,6 +28,19 @@ router.route('/')
       })
       .catch((err) =>{
         return res.json({message: messages.internalServer});
+      });
+  })
+
+  .get((req,res) => {
+    return Gallery.fetchAll()
+      .then((listing) => {
+        const getData = listing.models.map(data => {
+          return data.attributes;
+        });
+        return res.render('gallery/listing', {listing: getData});
       })
+      .catch((err) => {
+        return res.json({message: messages.internalServer});
+      });
   })
 module.exports = router;
