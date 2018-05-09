@@ -96,17 +96,65 @@ router.route('/:id')
       .then((gallery) => {
         return res.redirect('/gallery');
       })
-      .catch((err)=>{
-        if(err.message === 'No Rows Deleted'){
-          return res.status(404).json({message: messages.notFound});
-        }else{
-          return res.status(500).json({message: messages.internalServer});
+      .catch((err) => {
+        if (err.message === 'No Rows Deleted') {
+          return res.status(404).json({
+            message: messages.notFound
+          });
+        } else {
+          return res.status(500).json({
+            message: messages.internalServer
+          });
         }
       })
   })
 
+  .put((req, res) => {
+    const id = req.params.id;
+
+    let {
+      author,
+      link,
+      description
+    } = req.body;
+
+    author = author.trim();
+    link = link.trim();
+    description = description.trim();
+
+    validateRequest([author, link, description], res, messages.badRequest);
+
+    return new Gallery({
+      id: id
+    })
+    .fetch()
+    .then((gallery)=>{
+      if(!gallery){
+        throw new Error(messages.notFound);
+      }
+      const updateObj = {
+        author: author,
+        link: link,
+        description: description
+      };
+      return gallery.save(updateObj, {
+        method: 'update',
+        patch: true
+      });
+    })
+    .then((updatedGallery)=>{
+      return res.redirect(`/gallery/${id}`);
+    })
+    .catch((err) => {
+      if(err.message === messages.notFound){
+        return res.status(404).json({ message: messages.notFound });
+      }
+      return res.status(500).json({ message: messages.internalServer });
+    })
+  })
+
 router.route('/:id/edit')
-  .get((req, res) =>{
+  .get((req, res) => {
     const id = req.params.id;
 
     return new Gallery()
@@ -114,10 +162,24 @@ router.route('/:id/edit')
         id: id
       })
       .fetch()
-      .then((gallery) =>{
+      .then((gallery) => {
+        if (!gallery) {
+          throw new Error(messages.notFound);
+        }
         const data = gallery.attributes;
 
         return res.render('gallery/edit', data);
       })
+      .catch((err) => {
+        if (err.message === messages.notFound) {
+          return res.status(404).json({
+            message: messages.notFound
+          })
+        } else {
+          return res.status(500).json({
+            message: messages.internalServer
+          });
+        }
+      });
   })
 module.exports = router;
