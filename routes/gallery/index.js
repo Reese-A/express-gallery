@@ -24,7 +24,12 @@ router.route('/')
     link = link.trim();
     description = description.trim();
 
-    validateRequest([author, link, description], res, messages.badRequest);
+    if(!validateRequest([author, link, description])){
+      console.log(description.length);
+      return res.status(400).json({
+        message: messages.badRequest,
+      });
+    }
 
     return new Gallery({
         author,

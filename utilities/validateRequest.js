@@ -1,8 +1,8 @@
-module.exports = function(arr, res, message){
+module.exports = function(arr){
   arr.forEach((curr) => {
     if(curr.length < 1){
-      return res.status(400).json({message: message});
+      return false;
     }
-    return true;
   })
+  return true;
 }
