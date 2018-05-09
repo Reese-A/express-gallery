@@ -1,10 +1,12 @@
 const express = require('express');
 const passport = require('passport');
+const bcrypt = require('bcrypt');
+
 const validateRequest = require('../../utilities/validateRequest');
 const messages = require('../../utilities/messages');
 const User = require('../../db/models/User');
 
-
+const saltedRounds = 12;
 const router = express.Router();
 
 router.route('/register')
@@ -24,22 +26,34 @@ router.route('/')
 
     validateRequest([username, password], res, messages.badRequest);
 
-    return new User({
-        username,
-        password,
-      })
-      .save()
-      .then((user) => {
-        return res.redirect('/');
-      })
-      .catch((err) => {
+    bcrypt.genSalt(saltedRounds, function (err, salt) {
+      if (err) {
         console.log(err);
-        
-        return res.status(500).json({
-          message: messages.internalServer
-        });
-      });
+      }
+      bcrypt.hash(req.body.password, salt, function (err, hash) {
+        if (err) {
+          console.log(err);
+        }
+        return new User({
+            username,
+            password: hash,
+          })
+          .save()
+          .then((user) => {
+            return res.redirect('/');
+          })
+          .catch((err) => {
+            console.log(err);
+
+            return res.status(500).json({
+              message: messages.internalServer
+            });
+          });
+      })
+    })
   })
+
+
 
 router.route('/login')
   .post(passport.authenticate('local', {
