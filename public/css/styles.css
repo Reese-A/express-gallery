@@ -7,7 +7,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 75%;
 }
 
 #headerWrap {
@@ -19,6 +19,7 @@ body {
 }
 
 #headerWrap #logo {
+  height: 100%;
   width: 60%;
   padding-right: 10px;
   border-right: 1px solid gray;
@@ -33,26 +34,42 @@ body {
 
 #staticImage {
   margin-top: 30px;
+  width: 100%;
+  padding-bottom: 30px;
+  border-bottom: 1px dotted gray;
 }
 
 #contentWrap {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
-  margin-top: 60px;
+  padding-top: 10px;
 }
 
 #contentWrap .cardWrap {
   width: 30%;
+  height: 300px;
+  overflow: hidden;
+  margin: 20px 0px;
+  padding: 0px 10px;
+  border-bottom: 1px dotted gray;
 }
 
 #contentWrap .cardWrap img {
-  height: 200px;
+  height: 250px;
 }
 
 #contentWrap .cardWrap .image {
   width: 100%;
   object-fit: cover;
+}
+
+#contentWrap .cardWrap .author {
+  font-size: 20px;
+}
+
+#contentWrap .cardWrap .link {
+  font-size: 20px;
 }
