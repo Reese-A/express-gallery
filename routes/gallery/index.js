@@ -2,6 +2,7 @@ const express = require('express');
 const Gallery = require('../../db/models/Gallery');
 const messages = require('../../utilities/messages');
 const validateRequest = require('../../utilities/validateRequest');
+const isAuthenticated = require('../../utilities/isAuthenticated');
 
 const router = express.Router();
 
@@ -41,7 +42,8 @@ router.route('/')
       });
   })
 
-  .get((req, res) => {
+  .get(isAuthenticated, (req, res) => {
+    
     return Gallery.fetchAll()
       .then((listing) => {
         const getData = listing.models.map(data => {
