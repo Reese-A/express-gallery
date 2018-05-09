@@ -13,6 +13,8 @@ router.route('/new')
 
 router.route('/')
   .post((req, res) => {
+    const user_id = req.session.passport.user.id;
+
     let {
       author,
       link,
@@ -33,7 +35,8 @@ router.route('/')
     return new Gallery({
         author,
         link,
-        description
+        description,
+        user_id,
       })
       .save()
       .then((gallery) => {
@@ -47,7 +50,6 @@ router.route('/')
   })
 
   .get((req, res) => {
-    
     return Gallery.fetchAll()
       .then((listing) => {
         const getData = listing.models.map(data => {
