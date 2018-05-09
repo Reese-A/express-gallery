@@ -6,6 +6,8 @@ const methodOverride = require('method-override');
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.engine('.hbs', exphbs({
   extname: '.hbs',
   defaultLayout: 'main'
