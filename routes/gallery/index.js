@@ -78,10 +78,12 @@ router.route('/:id')
         const mainCard = detail.attributes;
 
         return Gallery.query((qb) => {
-            qb.limit(3);
+            qb.limit(3).where('id', '!=', id);
           })
           .fetchAll()
           .then((listing) => {
+            console.log(listing.models);
+            
             const listingCards = listing.models.map((curr) => {
               return curr.attributes;
             })
