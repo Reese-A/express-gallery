@@ -114,8 +114,8 @@ router.route('/:id')
           throw new Error(messages.notFound);
         };
         if (gallery.attributes.user_id !== user_id) {
-          throw new Error(messages.badRequest);
-        }
+          throw new Error(messages.notAuthorized);
+        };
         return gallery.destroy()
       })
       .then((gallery) => {
@@ -125,9 +125,9 @@ router.route('/:id')
       })
       .catch((err) => {
         console.log(err);
-        if (err.message === messages.badRequest) {
-          return res.status(400).json({
-            message: messages.badRequest
+        if (err.message === messages.notAuthorized) {
+          return res.status(401).json({
+            message: messages.notAuthorized
           });
         }
         if (err.message === 'No Rows Deleted') {
@@ -169,7 +169,7 @@ router.route('/:id')
           throw new Error(messages.notFound);
         };
         if (gallery.attributes.user_id !== user_id) {
-          throw new Error(messages.badRequest);
+          throw new Error(messages.notAuthorized);
         };
 
         const updateObj = {
@@ -186,6 +186,9 @@ router.route('/:id')
         return res.redirect(`/gallery/${id}`);
       })
       .catch((err) => {
+        if(err.message === messages.notAuthorized){
+          return res.status(401).json({message: messages.notAuthorized});
+        };
         if (err.message === messages.badRequest) {
           return res.status(400).json({
             message: messages.badRequest
