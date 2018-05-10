@@ -3,6 +3,13 @@ body {
   justify-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: gray;
+  background-image: url("/assets/crossword.png");
+}
+
+#indexWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #superWrap {
@@ -22,8 +29,10 @@ body {
   width: 100%;
   display: flex;
   flex-direction: row;
-  border-top: 1px dotted gray;
+  border-top: 2px dotted lightgrey;
   margin-bottom: 30px;
+  margin-top: 35px;
+  padding-top: 10px;
 }
 
 @media only screen and (max-width: 414px) {
@@ -31,6 +40,7 @@ body {
     border: none;
     margin-bottom: 15px;
     margin-top: 35px;
+    padding-top: 0;
   }
 }
 
@@ -38,7 +48,7 @@ body {
   height: 100%;
   width: 70%;
   padding-right: 10px;
-  border-right: 1px solid gray;
+  border-right: 2px solid lightgray;
   margin: 5px 0px;
 }
 
@@ -86,7 +96,7 @@ body {
 @media only screen and (max-width: 414px) {
   #contentWrap {
     flex-direction: column;
-    border-top: 1px dotted gray;
+    border-top: 2px dotted gray;
     margin-top: 10px;
     padding: 0;
     align-items: center;
