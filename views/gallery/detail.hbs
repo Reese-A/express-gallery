@@ -7,7 +7,11 @@
     <form action="/gallery/{{mainCard.id}}?_method=DELETE" method="POST" id="delete">
       <button type="submit">DELETE</button>
     </form>
+    <br>
     <a href="/gallery/{{mainCard.id}}/edit">Edit</a>
+    <br>
+    <br>
+    <a href="/gallery">Return to gallery</a>
   </div>
   <div id="listingWrap">
     {{#each listing}}
