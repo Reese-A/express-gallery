@@ -2,6 +2,7 @@ const express = require('express');
 const Gallery = require('../../db/models/Gallery');
 const messages = require('../../utilities/messages');
 const validateRequest = require('../../utilities/validateRequest');
+const isAuthenticated = require('../../utilities/isAuthenticated');
 
 const router = express.Router();
 
@@ -12,8 +13,8 @@ router.route('/new')
   });
 
 router.route('/')
-  .post((req, res) => {
-    const user_id = req.session.passport.user.id;
+  .post(isAuthenticated, (req, res) => {
+    const user_id = req.user.id;
 
     let {
       author,
@@ -25,7 +26,7 @@ router.route('/')
     link = link.trim();
     description = description.trim();
 
-    if(!validateRequest([author, link, description])){
+    if (!validateRequest([author, link, description])) {
       console.log(description.length);
       return res.status(400).json({
         message: messages.badRequest,
@@ -50,6 +51,7 @@ router.route('/')
   })
 
   .get((req, res) => {
+    console.log('USER', req.user)
     return Gallery.fetchAll()
       .then((listing) => {
         const getData = listing.models.map(data => {
@@ -84,7 +86,7 @@ router.route('/:id')
           .fetchAll()
           .then((listing) => {
             console.log(listing.models);
-            
+
             const listingCards = listing.models.map((curr) => {
               return curr.attributes;
             })
@@ -97,29 +99,53 @@ router.route('/:id')
   })
 
   .delete((req, res) => {
+    const user_id = req.user.id;
+    if (!user_id) {
+      return res.redirect('/')
+    }
     const id = req.params.id;
 
     return new Gallery({
-        id: id
+        id
       })
-      .destroy()
+      .fetch()
       .then((gallery) => {
+        if (!gallery) {
+          throw new Error(messages.notFound);
+        };
+        if (gallery.attributes.user_id !== user_id) {
+          throw new Error(messages.badRequest);
+        }
+        return gallery.destroy()
+      })
+      .then((gallery) => {
+        console.log(gallery);
+
         return res.redirect('/gallery');
       })
       .catch((err) => {
+        console.log(err);
+        if (err.message === messages.badRequest) {
+          return res.status(400).json({
+            message: messages.badRequest
+          });
+        }
         if (err.message === 'No Rows Deleted') {
           return res.status(404).json({
             message: messages.notFound
           });
-        } else {
-          return res.status(500).json({
-            message: messages.internalServer
-          });
         }
+        return res.status(500).json({
+          message: messages.internalServer
+        });
       })
   })
 
   .put((req, res) => {
+    const user_id = req.user.id;
+    if (!user_id) {
+      return res.redirect('/')
+    }
     const id = req.params.id;
 
     let {
@@ -135,32 +161,45 @@ router.route('/:id')
     validateRequest([author, link, description], res, messages.badRequest);
 
     return new Gallery({
-      id: id
-    })
-    .fetch()
-    .then((gallery)=>{
-      if(!gallery){
-        throw new Error(messages.notFound);
-      }
-      const updateObj = {
-        author: author,
-        link: link,
-        description: description
-      };
-      return gallery.save(updateObj, {
-        method: 'update',
-        patch: true
-      });
-    })
-    .then((updatedGallery)=>{
-      return res.redirect(`/gallery/${id}`);
-    })
-    .catch((err) => {
-      if(err.message === messages.notFound){
-        return res.status(404).json({ message: messages.notFound });
-      }
-      return res.status(500).json({ message: messages.internalServer });
-    })
+        id: id
+      })
+      .fetch()
+      .then((gallery) => {
+        if (!gallery) {
+          throw new Error(messages.notFound);
+        };
+        if (gallery.attributes.user_id !== user_id) {
+          throw new Error(messages.badRequest);
+        };
+
+        const updateObj = {
+          author: author,
+          link: link,
+          description: description
+        };
+        return gallery.save(updateObj, {
+          method: 'update',
+          patch: true
+        });
+      })
+      .then((updatedGallery) => {
+        return res.redirect(`/gallery/${id}`);
+      })
+      .catch((err) => {
+        if (err.message === messages.badRequest) {
+          return res.status(400).json({
+            message: messages.badRequest
+          });
+        }
+        if (err.message === messages.notFound) {
+          return res.status(404).json({
+            message: messages.notFound
+          });
+        }
+        return res.status(500).json({
+          message: messages.internalServer
+        });
+      })
   })
 
 router.route('/:id/edit')
