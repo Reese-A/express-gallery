@@ -81,6 +81,10 @@ router.route('/:id')
       })
       .fetch()
       .then((detail) => {
+        if(!detail){
+          throw new Error(messages.notFound);
+        };
+        
         const mainCard = detail.attributes;
 
         return Gallery.query((qb) => {
@@ -96,6 +100,12 @@ router.route('/:id')
               listing: listingCards,
             })
           })
+      })
+      .catch((err)=>{
+        if(err.message = messages.notFound){
+          return res.status(404).redirect('/404.html');
+        };
+        
       })
   })
 
