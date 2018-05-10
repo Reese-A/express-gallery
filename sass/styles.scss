@@ -115,16 +115,31 @@ body {
   display: flex;
   flex-direction: row;
   margin-top: 100px;
+  @media only screen and (max-width: 414px) {
+    justify-content: center;
+    margin-top: 20px;
+  }
   #detailCard {
     width: 65%;
     margin-right: 15px;
+    @media only screen and (max-width: 414px) {
+      margin-right: 0px;
+      width: 100%;
+    }
+
     #detailImage {
       width: 100%;
       height: 400px;
       object-fit: cover;
+      @media only screen and (max-width: 414px) {
+      height: 200px;
+      }
     }
   }
   #listingWrap {
+    @media only screen and (max-width: 414px) {
+    display: none;
+    }
     width: 30%;
     margin-left: 15px;
     .detailImage {

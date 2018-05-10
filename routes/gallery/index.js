@@ -142,7 +142,15 @@ router.route('/:id')
   })
 
   .put((req, res) => {
-    const user_id = req.user.id;
+    const user = req.user;
+
+    if(user === undefined){
+      return res.status(401).json({
+        message: messages.notAuthorized,
+      })
+    }
+
+    const user_id = user.id;
     if (!user_id) {
       return res.redirect('/')
     }
@@ -168,6 +176,7 @@ router.route('/:id')
         if (!gallery) {
           throw new Error(messages.notFound);
         };
+
         if (gallery.attributes.user_id !== user_id) {
           throw new Error(messages.notAuthorized);
         };
@@ -209,6 +218,14 @@ router.route('/:id/edit')
   .get((req, res) => {
     const id = req.params.id;
 
+    const user = req.user;
+
+    if(user === undefined){
+      return res.redirect('/')
+    }
+  
+    const user_id = req.user.id;
+
     return new Gallery()
       .where({
         id: id
@@ -218,20 +235,32 @@ router.route('/:id/edit')
         if (!gallery) {
           throw new Error(messages.notFound);
         }
+
+        if (gallery.attributes.user_id !== user_id) {
+          throw new Error(messages.notAuthorized);
+        };
+
         const data = gallery.attributes;
 
         return res.render('gallery/edit', data);
       })
       .catch((err) => {
+        console.log(err);
+        if(err.message === messages.notAuthorized){
+          return res.status(401).json({
+            message: messages.notAuthorized,
+          })
+        }
+
         if (err.message === messages.notFound) {
           return res.status(404).json({
             message: messages.notFound
           })
-        } else {
+        } 
           return res.status(500).json({
             message: messages.internalServer
           });
-        }
+        
       });
   })
 module.exports = router;

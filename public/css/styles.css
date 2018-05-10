@@ -154,9 +154,23 @@ body {
   margin-top: 100px;
 }
 
+@media only screen and (max-width: 414px) {
+  #detailWrap {
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+
 #detailWrap #detailCard {
   width: 65%;
   margin-right: 15px;
+}
+
+@media only screen and (max-width: 414px) {
+  #detailWrap #detailCard {
+    margin-right: 0px;
+    width: 100%;
+  }
 }
 
 #detailWrap #detailCard #detailImage {
@@ -165,9 +179,21 @@ body {
   object-fit: cover;
 }
 
+@media only screen and (max-width: 414px) {
+  #detailWrap #detailCard #detailImage {
+    height: 200px;
+  }
+}
+
 #detailWrap #listingWrap {
   width: 30%;
   margin-left: 15px;
+}
+
+@media only screen and (max-width: 414px) {
+  #detailWrap #listingWrap {
+    display: none;
+  }
 }
 
 #detailWrap #listingWrap .detailImage {
