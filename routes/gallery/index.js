@@ -26,8 +26,11 @@ router.route('/')
     link = link.trim();
     description = description.trim();
 
+    if (!link.includes('http')){
+      throw new Error(messages.badRequest);
+    };
+
     if (!validateRequest([author, link, description])) {
-      console.log(description.length);
       return res.status(400).json({
         message: messages.badRequest,
       });
@@ -41,7 +44,7 @@ router.route('/')
       })
       .save()
       .then((gallery) => {
-        return res.redirect('/gallery');
+        return res.redirect(`/gallery/${gallery.attributes.id}`);
       })
       .catch((err) => {
         return res.json({
@@ -85,8 +88,6 @@ router.route('/:id')
           })
           .fetchAll()
           .then((listing) => {
-            console.log(listing.models);
-
             const listingCards = listing.models.map((curr) => {
               return curr.attributes;
             })
@@ -119,8 +120,6 @@ router.route('/:id')
         return gallery.destroy()
       })
       .then((gallery) => {
-        console.log(gallery);
-
         return res.redirect('/gallery');
       })
       .catch((err) => {
