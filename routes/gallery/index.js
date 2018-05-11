@@ -50,7 +50,6 @@ router.route('/')
   })
 
   .get((req, res) => {
-    console.log('USER', req.user)
     return Gallery.fetchAll()
       .then((listing) => {
         const getData = listing.models.map(data => {
@@ -72,11 +71,15 @@ router.route('/:id')
     const id = req.params.id;
     const user = req.user;
 
-    if (user === undefined) {
-      return res.redirect('/login')
+    // if (user === undefined) {
+    //   return res.redirect('/users/login')
+    // }
+    let user_id = '';
+    if (user !== undefined) {
+      user_id = req.user.id;
     }
 
-    const user_id = req.user.id;
+    // const user_id = req.user.id;
     const owner = {
       isOwned: false
     };
@@ -183,7 +186,7 @@ router.route('/:id')
     link = link.trim();
     description = description.trim();
 
-    validateRequest([author, link, description], res, messages.badRequest);
+    validateRequest([author, link, description]);
 
     return new Gallery({
         id: id
@@ -233,7 +236,7 @@ router.route('/:id/edit')
     const user = req.user;
 
     if (user === undefined) {
-      return res.redirect('/login')
+      return res.redirect('/users/login')
     }
 
     const user_id = req.user.id;
@@ -257,7 +260,6 @@ router.route('/:id/edit')
         return res.render('gallery/edit', data);
       })
       .catch((err) => {
-        console.log(err);
         if (err.message === messages.notAuthorized) {
           return res.status(401).redirect('/401.html');
         };
