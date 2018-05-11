@@ -1,0 +1,15 @@
+<div id = 'detailName'>{{detail.username}}</div>
+<br>
+<div id = 'joined'>Joined site on: {{detail.created_at}}</div>
+<br>
+<br>
+<div id = 'userContentWrap'>
+  {{#each listing}}
+  <div class = 'userCard'>
+    <div class = 'detailPostDate'>{{created_at}}</div>
+    <a href="">
+      <img src="{{link}}" alt="" class = 'detailImg'>
+    </a>
+  </div>
+  {{/each}}
+</div>

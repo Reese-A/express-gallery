@@ -109,8 +109,11 @@ router.route('/:id')
               mainCard: mainCard,
               listing: listingCards,
               owner
-            })
+            });
           })
+          .catch((err)=>{
+            return res.status(500).redirect('/500.html');
+          });
       })
       .catch((err) => {
         if (err.message = messages.notFound) {

@@ -1,24 +1,26 @@
 <div id='usersWrap'>
   {{#each users}}
   <div class='userWrap'>
-    <div class='name'>{{attributes.username}}</div>
+    <a href="/users/{{id}}">
+      <div class='name'>{{attributes.username}}</div>
+    </a>
     <div class='joinDate'>{{attributes.created_at}}</div>
     <div class='postCard'>
       <div class='postDate'>{{relations.gallery.models.0.attributes.created_at}}</div>
       <a href="/gallery/{{relations.gallery.models.0.attributes.id}}">
-        <img src="{{relations.gallery.models.0.attributes.link}}" alt="">
+        <img src="{{relations.gallery.models.0.attributes.link}}" alt="" class="listingImg">
       </a>
     </div>
     <div class='postCard'>
       <div class='postDate'>{{relations.gallery.models.1.attributes.created_at}}</div>
       <a href="/gallery/{{relations.gallery.models.1.attributes.id}}">
-        <img src="{{relations.gallery.models.1.attributes.link}}" alt="">
+        <img src="{{relations.gallery.models.1.attributes.link}}" alt="" class="listingImg">
       </a>
     </div>
     <div class='postCard'>
       <div class='postDate'>{{relations.gallery.models.2.attributes.created_at}}</div>
       <a href="/gallery/{{relations.gallery.models.2.attributes.id}}">
-        <img src="{{relations.gallery.models.2.attributes.link}}" alt="">
+        <img src="{{relations.gallery.models.2.attributes.link}}" alt="" class="listingImg">
       </a>
     </div>
   </div>

@@ -16,15 +16,19 @@ router.route('/register')
 
 
 router.route('/')
-  .get((req,res)=>{
+  .get((req, res) => {
     return User
-      .fetchAll({ withRelated: ['gallery']})
+      .fetchAll({
+        withRelated: ['gallery']
+      })
       .then((users) => {
         // console.log(users.models[3].relations.gallery.models[0].attributes)
         // return res.json(getData)
-        return res.render('users/listing', {users: users.models});
+        return res.render('users/listing', {
+          users: users.models
+        });
       })
-      .catch((err) =>{
+      .catch((err) => {
         return res.status(500).redirect('/500.html');
       });
   })
@@ -79,10 +83,45 @@ router.route('/login')
     return res.render('users/login');
   });
 
-router.route('./logout')
+router.route('/logout')
   .get((req, res) => {
     req.logout();
     res.sendStatus(200);
+  });
+
+
+router.route('/:id')
+  .get((req, res) => {
+    const id = req.params.id;
+    return User
+      .where({
+        id: id
+      })
+      .fetch({
+        withRelated: ['gallery']
+      })
+      .then((user)=>{
+        if(!user){
+          throw new Error(messages.notFound);
+        };
+
+        const detail = user.attributes;
+        const getGallery = user.relations.gallery.models.map(data => {
+          return data.attributes;
+        });
+
+        return res.render('users/detail', {
+          detail: detail,
+          listing: getGallery
+        })
+      })
+      .catch((err)=>{
+        if(err.message === messages.notFound){
+          return res.status(404).redirect('/404.html');
+        };
+
+        return res.status(500).redirect('/500.html');
+      });
   });
 
 module.exports = router;
