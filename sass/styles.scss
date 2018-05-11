@@ -6,13 +6,13 @@ body {
   background-image: url('/assets/cubes.png');
 }
 
-#indexWrap{
+#indexWrap {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#errorWrap{
+#errorWrap {
   display: flex;
   flex-direction: column;
 }
@@ -141,19 +141,18 @@ body {
       margin-right: 0px;
       width: 100%;
     }
-
     #detailImage {
       width: 100%;
       height: 400px;
       object-fit: cover;
       @media only screen and (max-width: 414px) {
-      height: 200px;
+        height: 200px;
       }
     }
   }
   #listingWrap {
     @media only screen and (max-width: 414px) {
-    display: none;
+      display: none;
     }
     width: 30%;
     margin-left: 15px;
@@ -161,6 +160,47 @@ body {
       width: 100%;
       height: 250px;
       object-fit: cover;
+    }
+  }
+}
+
+#usersWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  .userWrap {
+    padding-bottom: 20px;
+    border-bottom: 2px solid lightgray;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    .infoWrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+      .name {
+        font-size: 30px;
+        margin: 10px 0px;
+      }
+      .joinDate {
+        font-size: 12px;
+        margin-bottom: 15px;
+      }
+    }
+    .postCard {
+      margin: 15px;
+      width: 30%;
+      .postDate {
+        font-size: 12px;
+      }
+      .listingImg {
+        width: 100%;
+        object-fit: cover;
+      }
     }
   }
 }

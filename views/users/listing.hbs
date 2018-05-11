@@ -1,10 +1,14 @@
 <div id='usersWrap'>
+  <h1>Registered Users</h1>
   {{#each users}}
   <div class='userWrap'>
+    <div class = 'infoWrap'>
     <a href="/users/{{id}}">
       <div class='name'>{{attributes.username}}</div>
     </a>
-    <div class='joinDate'>{{attributes.created_at}}</div>
+    <div class='joinDate'>Joined site on: {{attributes.created_at}}</div>
+    Posted Items:
+    </div>
     <div class='postCard'>
       <div class='postDate'>{{relations.gallery.models.0.attributes.created_at}}</div>
       <a href="/gallery/{{relations.gallery.models.0.attributes.id}}">

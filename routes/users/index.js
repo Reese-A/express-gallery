@@ -22,8 +22,7 @@ router.route('/')
         withRelated: ['gallery']
       })
       .then((users) => {
-        // console.log(users.models[3].relations.gallery.models[0].attributes)
-        // return res.json(getData)
+        // const userGallery = users.toJSON()[3].gallery;
         return res.render('users/listing', {
           users: users.models
         });
@@ -113,7 +112,7 @@ router.route('/:id')
         return res.render('users/detail', {
           detail: detail,
           listing: getGallery
-        })
+        });
       })
       .catch((err)=>{
         if(err.message === messages.notFound){

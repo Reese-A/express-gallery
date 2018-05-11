@@ -216,3 +216,51 @@ body {
   height: 250px;
   object-fit: cover;
 }
+
+#usersWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+
+#usersWrap .userWrap {
+  padding-bottom: 20px;
+  border-bottom: 2px solid lightgray;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#usersWrap .userWrap .infoWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#usersWrap .userWrap .infoWrap .name {
+  font-size: 30px;
+  margin: 10px 0px;
+}
+
+#usersWrap .userWrap .infoWrap .joinDate {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+#usersWrap .userWrap .postCard {
+  margin: 15px;
+  width: 30%;
+}
+
+#usersWrap .userWrap .postCard .postDate {
+  font-size: 12px;
+}
+
+#usersWrap .userWrap .postCard .listingImg {
+  width: 100%;
+  object-fit: cover;
+}
