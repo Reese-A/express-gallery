@@ -10,8 +10,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  #indexLogo{
-    width:90%;
+  #indexLogo {
+    width: 90%;
   }
 }
 
@@ -208,25 +208,54 @@ body {
   }
 }
 
-#joined{
+#joined {
   font-size: 12px;
 }
 
-#userContentWrap{
+#userContentWrap {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  .userCard{
-    width:40%;
+  .userCard {
+    width: 40%;
     margin: 20px;
-    .detailPostDate{
+    .detailPostDate {
       font-size: 12px;
     }
-    .detailImage{
+    .detailImage {
       width: 100%;
       height: 250px;
       object-fit: cover;
     }
+  }
+}
+
+@mixin navButton() {
+  background-color: lightblue;
+  margin: -8px 0px;
+  padding: 0px 5px;
+  display: flex;
+  align-items: center;
+}
+
+#navWrap {
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  justify-content: space-evenly;
+  position: fixed;
+  #navGallWrap {
+    @include navButton();
+  }
+  #navUsersWrap {
+    @include navButton();
+  }
+  #navMyWrap {
+    @include navButton();
+  }
+  #navNewWrap {
+    @include navButton();
   }
 }
