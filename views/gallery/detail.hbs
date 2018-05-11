@@ -4,11 +4,13 @@
     <img src="{{mainCard.link}}" alt="" id="detailImage">
     <div id="detailDescription">{{mainCard.description}}</div>
     <div id="detailLink">Copyright {{mainCard.link}}</div>
+    {{#if owner.isOwned}}
     <form action="/gallery/{{mainCard.id}}?_method=DELETE" method="POST" id="delete">
       <button type="submit">DELETE</button>
     </form>
     <br>
     <a href="/gallery/{{mainCard.id}}/edit">Edit</a>
+    {{/if}}
     <br>
     <br>
     <a href="/gallery">Return to gallery</a>

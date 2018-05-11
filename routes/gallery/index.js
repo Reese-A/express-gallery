@@ -70,6 +70,16 @@ router.route('/')
 router.route('/:id')
   .get((req, res) => {
     const id = req.params.id;
+    const user = req.user;
+
+    if (user === undefined) {
+      return res.redirect('/login')
+    }
+
+    const user_id = req.user.id;
+    const owner = {
+      isOwned: false
+    };
 
     return new Gallery()
       .where({
@@ -83,6 +93,10 @@ router.route('/:id')
 
         const mainCard = detail.attributes;
 
+        if(mainCard.user_id === user_id){
+          owner.isOwned = true;
+        };
+        
         return Gallery.query((qb) => {
             qb.limit(3).where('id', '!=', id);
           })
@@ -94,6 +108,7 @@ router.route('/:id')
             return res.render('gallery/detail', {
               mainCard: mainCard,
               listing: listingCards,
+              owner
             })
           })
       })
