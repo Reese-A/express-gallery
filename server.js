@@ -105,4 +105,8 @@ passport.use(new LocalStrategy(function (username, password, done) {
 
 app.use('/', routes);
 
+app.get('*', (req, res) => {
+  res.status(404).redirect('/404.html');
+});
+
 module.exports = app;

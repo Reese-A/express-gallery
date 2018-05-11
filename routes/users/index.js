@@ -16,6 +16,15 @@ router.route('/register')
 
 
 router.route('/')
+  .get((req,res)=>{
+    return User
+      .fetchAll({ withRelated: ['gallery']})
+      .then((users) => {
+        return res.json(users);
+      })
+  })
+
+
   .post((req, res) => {
     let {
       username,
