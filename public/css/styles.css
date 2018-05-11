@@ -305,33 +305,41 @@ body {
 }
 
 #navWrap #navGallWrap {
-  background-color: lightblue;
+  background-color: lightgray;
+  opacity: 0.75;
   margin: -8px 0px;
   padding: 0px 5px;
   display: flex;
   align-items: center;
+  color: black;
 }
 
 #navWrap #navUsersWrap {
-  background-color: lightblue;
+  background-color: lightgray;
+  opacity: 0.75;
   margin: -8px 0px;
   padding: 0px 5px;
   display: flex;
   align-items: center;
+  color: black;
 }
 
 #navWrap #navMyWrap {
-  background-color: lightblue;
+  background-color: lightgray;
+  opacity: 0.75;
   margin: -8px 0px;
   padding: 0px 5px;
   display: flex;
   align-items: center;
+  color: black;
 }
 
 #navWrap #navNewWrap {
-  background-color: lightblue;
+  background-color: lightgray;
+  opacity: 0.75;
   margin: -8px 0px;
   padding: 0px 5px;
   display: flex;
   align-items: center;
+  color: black;
 }

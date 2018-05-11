@@ -1,35 +1,27 @@
 <div id = 'navWrap'>
 
-  <div id = 'navGallWrap'>
-<a href="/gallery">
+<a href="/gallery" id = 'navGallWrap'>
 <div id = 'navGallery'>Gallery</div>
 </a>
-</div>
 
 <br>
 
-<div id = 'navUsersWrap'>
-<a href="/users">
+<a href="/users" id = 'navUsersWrap'>
 <div id = 'navUsers'>Users</div>
 </a>
-</div>
 
 <br>
 
 {{#if loggedIn}}
-<div id = 'navMyWrap'>
-<a href="/users/{{id}}">
+<a href="/users/{{id}}" id = 'navMyWrap'>
 <div id = 'navMy'>My gallery</div>
 </a>
-</div>
 
 <br>
 {{/if}}
 
-<div id = 'navNewWrap'>
-<a href="/gallery/new">
+<a href="/gallery/new" id = 'navNewWrap'>
 <div id = 'navNew'>Make new post</div>
 </a>
-</div>
 
 </div>

@@ -232,11 +232,13 @@ body {
 }
 
 @mixin navButton() {
-  background-color: lightblue;
+  background-color: lightgray;
+  opacity: 0.75;
   margin: -8px 0px;
   padding: 0px 5px;
   display: flex;
   align-items: center;
+  color: black
 }
 
 #navWrap {
