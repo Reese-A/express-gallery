@@ -20,8 +20,13 @@ router.route('/')
     return User
       .fetchAll({ withRelated: ['gallery']})
       .then((users) => {
-        return res.json(users);
+        // console.log(users.models[3].relations.gallery.models[0].attributes)
+        // return res.json(getData)
+        return res.render('users/listing', {users: users.models});
       })
+      .catch((err) =>{
+        return res.status(500).redirect('/500.html');
+      });
   })
 
 
