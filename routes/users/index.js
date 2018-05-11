@@ -41,7 +41,9 @@ router.route('/')
 
     username = username.trim();
 
-    validateRequest([username, password], res, messages.badRequest);
+    if (!validateRequest([username, password], res, messages.badRequest)) {
+      return res.send(400).redirect('/400.html');
+    };
 
     bcrypt.genSalt(saltedRounds, function (err, salt) {
       if (err) {
@@ -61,10 +63,10 @@ router.route('/')
           })
           .catch((err) => {
             console.log(err);
-
-            return res.status(500).json({
-              message: messages.internalServer
-            });
+            if (err.message.includes('duplicate key value')){
+              return res.status(400).redirect('/400_duplicate_user.html');
+            }
+            return res.status(500).redirect('/500.html');
           });
       })
     })
@@ -99,8 +101,8 @@ router.route('/:id')
       .fetch({
         withRelated: ['gallery']
       })
-      .then((user)=>{
-        if(!user){
+      .then((user) => {
+        if (!user) {
           throw new Error(messages.notFound);
         };
 
@@ -114,8 +116,8 @@ router.route('/:id')
           listing: getGallery
         });
       })
-      .catch((err)=>{
-        if(err.message === messages.notFound){
+      .catch((err) => {
+        if (err.message === messages.notFound) {
           return res.status(404).redirect('/404.html');
         };
 

@@ -12,6 +12,10 @@ body {
   align-items: center;
 }
 
+#indexWrap #indexLogo {
+  width: 90%;
+}
+
 #errorWrap {
   display: flex;
   flex-direction: column;
@@ -222,6 +226,7 @@ body {
   flex-direction: column;
   align-items: center;
   margin-top: 15px;
+  text-align: center;
 }
 
 #usersWrap .userWrap {
