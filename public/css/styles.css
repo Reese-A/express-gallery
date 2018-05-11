@@ -269,3 +269,29 @@ body {
   width: 100%;
   object-fit: cover;
 }
+
+#joined {
+  font-size: 12px;
+}
+
+#userContentWrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#userContentWrap .userCard {
+  width: 40%;
+  margin: 20px;
+}
+
+#userContentWrap .userCard .detailPostDate {
+  font-size: 12px;
+}
+
+#userContentWrap .userCard .detailImage {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}

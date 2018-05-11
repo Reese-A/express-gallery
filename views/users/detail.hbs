@@ -1,5 +1,4 @@
-<div id = 'detailName'>{{detail.username}}</div>
-<br>
+<h2 id = 'detailName'>{{detail.username}}</h2>
 <div id = 'joined'>Joined site on: {{detail.created_at}}</div>
 <br>
 <br>
@@ -7,8 +6,8 @@
   {{#each listing}}
   <div class = 'userCard'>
     <div class = 'detailPostDate'>{{created_at}}</div>
-    <a href="">
-      <img src="{{link}}" alt="" class = 'detailImg'>
+    <a href="/gallery/{{id}}">
+      <img src="{{link}}" alt="" class = 'detailImage'>
     </a>
   </div>
   {{/each}}

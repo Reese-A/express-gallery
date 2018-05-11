@@ -208,3 +208,26 @@ body {
     }
   }
 }
+
+#joined{
+  font-size: 12px;
+}
+
+#userContentWrap{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  .userCard{
+    width:40%;
+    margin: 20px;
+    .detailPostDate{
+      font-size: 12px;
+    }
+    .detailImage{
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+  }
+}
