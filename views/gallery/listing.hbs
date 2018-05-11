@@ -1,12 +1,18 @@
 <img src="http://www.dessign.net/architekttheme/wp-content/uploads/architekt21-959x349.jpg" alt="" id="staticImage">
-  <a href="/gallery/new">
-    <br>
-    <div id="newButton">Create new listing</div>
-  </a>
+<a href="/gallery/new">
+  <br>
+  <div id="newButton">Create new listing</div>
+</a>
+<a href="/users">
+  <br> 
+  <div>View users</div>
+</a>
 <div id='contentWrap'>
   {{#each listing}}
   <div class='cardWrap'>
-    <a href="/gallery/{{id}}"><img src="{{link}}" alt="" class = 'image'></a>
+    <a href="/gallery/{{id}}">
+      <img src="{{link}}" alt="" class='image'>
+    </a>
     <div class="text">
       <div class="author">{{author}}</div>
       <div class="link">{{link}}</div>

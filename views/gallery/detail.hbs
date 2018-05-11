@@ -1,7 +1,9 @@
 <div id="detailWrap">
   <div id="detailCard">
     <div id="detailAuthor">{{mainCard.author}}</div>
+    <a href="{{mainCard.link}}">
     <img src="{{mainCard.link}}" alt="" id="detailImage">
+    </a>
     <div id="detailDescription">{{mainCard.description}}</div>
     <div id="detailLink">Copyright {{mainCard.link}}</div>
     {{#if owner.isOwned}}
