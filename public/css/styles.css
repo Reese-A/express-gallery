@@ -191,6 +191,10 @@ body {
   }
 }
 
+#detailWrap #detailCard #detailDescription {
+  hyphens: auto;
+}
+
 #detailWrap #detailCard #detailImage {
   width: 100%;
   height: 400px;
@@ -222,10 +226,21 @@ body {
   }
 }
 
-#detailWrap #listingWrap .detailImage {
+#detailWrap #listingWrap .detailCard {
+  margin-bottom: 15px;
+}
+
+#detailWrap #listingWrap .detailCard .detailImage {
   width: 100%;
   height: 250px;
   object-fit: cover;
+}
+
+#detailWrap #listingWrap .detailCard .detailLink {
+  font-size: 10px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 #usersWrap {
