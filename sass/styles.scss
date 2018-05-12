@@ -216,6 +216,9 @@ body {
     .postCard {
       margin: 15px;
       width: 30%;
+      @media only screen and (max-width: 414px) {
+        width: 75%;
+      }
       .postDate {
         font-size: 12px;
       }
@@ -239,6 +242,9 @@ body {
   .userCard {
     width: 40%;
     margin: 20px;
+    @media only screen and (max-width: 414px) {
+      width: 75%;
+    }
     .detailPostDate {
       font-size: 12px;
     }
@@ -246,6 +252,9 @@ body {
       width: 100%;
       height: 250px;
       object-fit: cover;
+      @media only screen and (max-width: 414px) {
+        height: 150px;
+      }
     }
   }
 }
@@ -253,20 +262,31 @@ body {
 @mixin navButton() {
   background-color: lightgray;
   opacity: 0.75;
-  margin: -8px 0px;
+  margin: -8px 0px -8px 0px;
   padding: 0px 5px;
   display: flex;
   align-items: center;
-  color: black
+  color: black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  @media only screen and (max-width: 414px) {
+    padding: 0px 3px;
+    margin: -8px 0px 0px 3px;
+    font-size: 10px;
+    text-align: center;
+  }
 }
 
 #navWrap {
-  width: 20%;
+  width: 25%;
   display: flex;
   flex-direction: row;
   align-self: flex-end;
   justify-content: space-evenly;
   position: fixed;
+  @media only screen and (max-width: 414px) {
+    width: 45%;
+  }
   #navGallWrap {
     @include navButton();
   }

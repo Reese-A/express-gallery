@@ -1,4 +1,5 @@
 const express = require('express');
+const URL = require('url').URL;
 const Gallery = require('../../db/models/Gallery');
 const messages = require('../../utilities/messages');
 const validateRequest = require('../../utilities/validateRequest');
@@ -30,7 +31,17 @@ router.route('/')
       return res.status(400).redirect('/400.html');
     };
 
+    // const linkCheck = new URL(link);
+    
+    // if(!linkCheck){
+    //   return res.status(400).redirect('/400.html');
+    // };
+
     if (!link.includes('http')) {
+      return res.status(400).redirect('/400.html');
+    };
+
+    if(!link.includes('.jpg') && !link.includes('.png')){
       return res.status(400).redirect('/400.html');
     };
 
