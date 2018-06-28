@@ -1,4 +1,5 @@
 const express = require('express');
+const URL = require('url').URL;
 const Gallery = require('../../db/models/Gallery');
 const messages = require('../../utilities/messages');
 const validateRequest = require('../../utilities/validateRequest');
@@ -27,11 +28,22 @@ router.route('/')
     description = description.trim();
 
     if (!validateRequest([author, link, description])) {
-      console.log(description.length);
-      return res.status(400).json({
-        message: messages.badRequest,
-      });
-    }
+      return res.status(400).redirect('/400.html');
+    };
+
+    // const linkCheck = new URL(link);
+    
+    // if(!linkCheck){
+    //   return res.status(400).redirect('/400.html');
+    // };
+
+    if (!link.includes('http')) {
+      return res.status(400).redirect('/400.html');
+    };
+
+    if(!link.includes('.jpg') && !link.includes('.png')){
+      return res.status(400).redirect('/400.html');
+    };
 
     return new Gallery({
         author,
@@ -41,17 +53,14 @@ router.route('/')
       })
       .save()
       .then((gallery) => {
-        return res.redirect('/gallery');
+        return res.redirect(`/gallery/${gallery.attributes.id}`);
       })
       .catch((err) => {
-        return res.json({
-          message: messages.internalServer
-        });
+        return res.status(500).redirect('/500.html');
       });
   })
 
   .get((req, res) => {
-    console.log('USER', req.user)
     return Gallery.fetchAll()
       .then((listing) => {
         const getData = listing.models.map(data => {
@@ -62,15 +71,29 @@ router.route('/')
         });
       })
       .catch((err) => {
-        return res.json({
-          message: messages.internalServer
-        });
+        return res.status(500).redirect('/500.html');
       });
   });
+
+
 
 router.route('/:id')
   .get((req, res) => {
     const id = req.params.id;
+    const user = req.user;
+
+    // if (user === undefined) {
+    //   return res.redirect('/users/login')
+    // }
+    let user_id = '';
+    if (user !== undefined) {
+      user_id = req.user.id;
+    }
+
+    // const user_id = req.user.id;
+    const owner = {
+      isOwned: false
+    };
 
     return new Gallery()
       .where({
@@ -78,30 +101,46 @@ router.route('/:id')
       })
       .fetch()
       .then((detail) => {
+        if (!detail) {
+          throw new Error(messages.notFound);
+        };
+
         const mainCard = detail.attributes;
 
+        if(mainCard.user_id === user_id){
+          owner.isOwned = true;
+        };
+        
         return Gallery.query((qb) => {
             qb.limit(3).where('id', '!=', id);
           })
           .fetchAll()
           .then((listing) => {
-            console.log(listing.models);
-
             const listingCards = listing.models.map((curr) => {
               return curr.attributes;
             })
             return res.render('gallery/detail', {
               mainCard: mainCard,
               listing: listingCards,
-            })
+              owner
+            });
           })
+          .catch((err)=>{
+            return res.status(500).redirect('/500.html');
+          });
+      })
+      .catch((err) => {
+        if (err.message = messages.notFound) {
+          return res.status(404).redirect('/404.html');
+        };
+        return res.status(500).redirect('/500.html');
       })
   })
 
   .delete((req, res) => {
     const user_id = req.user.id;
     if (!user_id) {
-      return res.redirect('/')
+      return res.redirect('/users/login')
     }
     const id = req.params.id;
 
@@ -119,40 +158,32 @@ router.route('/:id')
         return gallery.destroy()
       })
       .then((gallery) => {
-        console.log(gallery);
-
         return res.redirect('/gallery');
       })
       .catch((err) => {
         console.log(err);
         if (err.message === messages.notAuthorized) {
-          return res.status(401).json({
-            message: messages.notAuthorized
-          });
-        }
+          return res.status(401).redirect('/401.html');
+        };
+
         if (err.message === 'No Rows Deleted') {
-          return res.status(404).json({
-            message: messages.notFound
-          });
-        }
-        return res.status(500).json({
-          message: messages.internalServer
-        });
+          return res.status(404).redirect('/404.html');
+        };
+
+        return res.status(500).redirect('/500.html');
       })
   })
 
   .put((req, res) => {
     const user = req.user;
 
-    if(user === undefined){
-      return res.status(401).json({
-        message: messages.notAuthorized,
-      })
+    if (user === undefined) {
+      return res.status(401).redirect('/401.html');
     }
 
     const user_id = user.id;
     if (!user_id) {
-      return res.redirect('/')
+      return res.redirect('/users/login')
     }
     const id = req.params.id;
 
@@ -166,7 +197,7 @@ router.route('/:id')
     link = link.trim();
     description = description.trim();
 
-    validateRequest([author, link, description], res, messages.badRequest);
+    validateRequest([author, link, description]);
 
     return new Gallery({
         id: id
@@ -195,22 +226,17 @@ router.route('/:id')
         return res.redirect(`/gallery/${id}`);
       })
       .catch((err) => {
-        if(err.message === messages.notAuthorized){
-          return res.status(401).json({message: messages.notAuthorized});
+        if (err.message === messages.notAuthorized) {
+          return res.status(401).redirect('/401.html');
         };
         if (err.message === messages.badRequest) {
-          return res.status(400).json({
-            message: messages.badRequest
-          });
+          return res.status(400).redirect('/400.html');
         }
-        if (err.message === messages.notFound) {
-          return res.status(404).json({
-            message: messages.notFound
-          });
-        }
-        return res.status(500).json({
-          message: messages.internalServer
-        });
+        if (err.message = messages.notFound) {
+          return res.status(404).redirect('/404.html');
+        };
+
+        return res.status(500).redirect('/500.html');
       })
   })
 
@@ -220,10 +246,10 @@ router.route('/:id/edit')
 
     const user = req.user;
 
-    if(user === undefined){
-      return res.redirect('/')
+    if (user === undefined) {
+      return res.redirect('/users/login')
     }
-  
+
     const user_id = req.user.id;
 
     return new Gallery()
@@ -245,22 +271,15 @@ router.route('/:id/edit')
         return res.render('gallery/edit', data);
       })
       .catch((err) => {
-        console.log(err);
-        if(err.message === messages.notAuthorized){
-          return res.status(401).json({
-            message: messages.notAuthorized,
-          })
-        }
+        if (err.message === messages.notAuthorized) {
+          return res.status(401).redirect('/401.html');
+        };
 
-        if (err.message === messages.notFound) {
-          return res.status(404).json({
-            message: messages.notFound
-          })
-        } 
-          return res.status(500).json({
-            message: messages.internalServer
-          });
-        
+        if (err.message = messages.notFound) {
+          return res.status(404).redirect('/404.html');
+        };
+
+        return res.status(500).redirect('/500.html');
       });
   })
 module.exports = router;

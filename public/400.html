@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,13 @@
   <link rel="stylesheet" href="/css/styles.css">
   <title>Document</title>
 </head>
+
 <body>
-  <div id="superWrap">
-  {{>nav}}
-  {{>header}}
-  {{{body}}}
+  <div class="errorWrap">
+    <h2>ERROR 400 BAD REQUEST</h2>
+    <div>Please enter valid information for all fields</div>
+    <a href="javascript:history.back()" class="backButton">Return to previous page</a>
   </div>
 </body>
+
 </html>

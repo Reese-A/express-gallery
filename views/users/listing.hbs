@@ -1,0 +1,37 @@
+<div id='usersWrap'>
+  <h1>Registered Users</h1>
+    <a href="/gallery">
+      <div>View full gallery</div>
+    </a>
+  <br>
+  <br>
+  {{#each users}}
+  <div class='userWrap'>
+    <div class = 'infoWrap'>
+    <a href="/users/{{id}}">
+      <div class='name'>{{attributes.username}}</div>
+    </a>
+    <div class='joinDate'>Joined site on: {{attributes.created_at}}</div>
+    Posted Items:
+    </div>
+    <div class='postCard'>
+      <div class='postDate'>{{relations.gallery.models.0.attributes.created_at}}</div>
+      <a href="/gallery/{{relations.gallery.models.0.attributes.id}}">
+        <img src="{{relations.gallery.models.0.attributes.link}}" alt="" class="listingImg">
+      </a>
+    </div>
+    <div class='postCard'>
+      <div class='postDate'>{{relations.gallery.models.1.attributes.created_at}}</div>
+      <a href="/gallery/{{relations.gallery.models.1.attributes.id}}">
+        <img src="{{relations.gallery.models.1.attributes.link}}" alt="" class="listingImg">
+      </a>
+    </div>
+    <div class='postCard'>
+      <div class='postDate'>{{relations.gallery.models.2.attributes.created_at}}</div>
+      <a href="/gallery/{{relations.gallery.models.2.attributes.id}}">
+        <img src="{{relations.gallery.models.2.attributes.link}}" alt="" class="listingImg">
+      </a>
+    </div>
+  </div>
+  {{/each}}
+</div>

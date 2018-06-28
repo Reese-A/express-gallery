@@ -1,18 +1,30 @@
 <div id="detailWrap">
   <div id="detailCard">
     <div id="detailAuthor">{{mainCard.author}}</div>
+    <a href="{{mainCard.link}}">
     <img src="{{mainCard.link}}" alt="" id="detailImage">
+    </a>
     <div id="detailDescription">{{mainCard.description}}</div>
+    <br>
     <div id="detailLink">Copyright {{mainCard.link}}</div>
+    {{#if owner.isOwned}}
+    <br>
     <form action="/gallery/{{mainCard.id}}?_method=DELETE" method="POST" id="delete">
       <button type="submit">DELETE</button>
     </form>
+    <br>
     <a href="/gallery/{{mainCard.id}}/edit">Edit</a>
+    {{/if}}
+    <br>
+    <br>
+    <a href="/gallery">Return to gallery</a>
   </div>
   <div id="listingWrap">
     {{#each listing}}
     <div class="detailCard">
+      <a href="/gallery/{{id}}">
       <img src="{{link}}" alt="" class="detailImage">
+      </a>
       <div class="detailText">
         <div class="detailAuthor">{{author}}</div>
         <div class="detailLink">{{link}}</div>

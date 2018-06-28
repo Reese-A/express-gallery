@@ -3,6 +3,21 @@ body {
   justify-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: gray;
+  background-image: url('/assets/cubes.png');
+}
+
+#indexWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  #indexLogo {
+    width: 90%;
+  }
+}
+
+#errorWrap {
+  display: flex;
+  flex-direction: column;
 }
 
 #superWrap {
@@ -19,18 +34,21 @@ body {
   width: 100%;
   display: flex;
   flex-direction: row;
-  border-top: 1px dotted gray;
+  border-top: 2px dotted lightgrey;
   margin-bottom: 30px;
+  margin-top: 35px;
+  padding-top: 10px;
   @media only screen and (max-width: 414px) {
     border:none;
     margin-bottom: 15px;
     margin-top: 35px;
+    padding-top: 0;
   }
   #logo {
     height: 100%;
     width: 70%;
     padding-right: 10px;
-    border-right: 1px solid gray;
+    border-right: 2px solid lightgray;
     margin: 5px 0px;
     @media only screen and (max-width: 414px) {
       border: none;
@@ -66,7 +84,7 @@ body {
   padding-top: 10px;
   @media only screen and (max-width: 414px) {
     flex-direction: column;
-    border-top: 1px dotted gray;
+    border-top: 2px dotted gray;
     margin-top: 10px;
     padding: 0;
     align-items: center;
@@ -111,12 +129,12 @@ body {
 }
 
 #detailWrap {
-  width: 75vw;
+  width: 80vw;
   display: flex;
   flex-direction: row;
   margin-top: 100px;
   @media only screen and (max-width: 414px) {
-    justify-content: center;
+    // justify-content: center;
     margin-top: 20px;
   }
   #detailCard {
@@ -126,26 +144,159 @@ body {
       margin-right: 0px;
       width: 100%;
     }
-
+    #detailDescription {
+      hyphens: auto;
+    }
     #detailImage {
       width: 100%;
       height: 400px;
       object-fit: cover;
+      margin-bottom: 10px;
       @media only screen and (max-width: 414px) {
-      height: 200px;
+        height: 200px;
       }
+    }
+    #detailLink {
+      font-size: 10px;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
     }
   }
   #listingWrap {
     @media only screen and (max-width: 414px) {
-    display: none;
+      display: none;
     }
     width: 30%;
     margin-left: 15px;
+    .detailCard {
+      margin-bottom: 15px;
+      .detailImage {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+      .detailLink {
+        font-size: 10px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
+      }
+    }
+  }
+}
+
+#usersWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 15px;
+  text-align: center;
+  .userWrap {
+    padding-bottom: 20px;
+    border-bottom: 2px solid lightgray;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .infoWrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+      .name {
+        font-size: 30px;
+        margin: 10px 0px;
+      }
+      .joinDate {
+        font-size: 12px;
+        margin-bottom: 15px;
+      }
+    }
+    .postCard {
+      margin: 15px;
+      width: 30%;
+      @media only screen and (max-width: 414px) {
+        width: 75%;
+      }
+      .postDate {
+        font-size: 12px;
+      }
+      .listingImg {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+#joined {
+  font-size: 12px;
+}
+
+#userContentWrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  .userCard {
+    width: 40%;
+    margin: 20px;
+    @media only screen and (max-width: 414px) {
+      width: 75%;
+    }
+    .detailPostDate {
+      font-size: 12px;
+    }
     .detailImage {
       width: 100%;
       height: 250px;
       object-fit: cover;
+      @media only screen and (max-width: 414px) {
+        height: 150px;
+      }
     }
+  }
+}
+
+@mixin navButton() {
+  background-color: lightgray;
+  opacity: 0.75;
+  margin: -8px 0px -8px 0px;
+  padding: 0px 5px;
+  display: flex;
+  align-items: center;
+  color: black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  @media only screen and (max-width: 414px) {
+    padding: 0px 3px;
+    margin: -8px 0px 0px 3px;
+    font-size: 10px;
+    text-align: center;
+  }
+}
+
+#navWrap {
+  width: 25%;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  justify-content: space-evenly;
+  position: fixed;
+  @media only screen and (max-width: 414px) {
+    width: 45%;
+  }
+  #navGallWrap {
+    @include navButton();
+  }
+  #navUsersWrap {
+    @include navButton();
+  }
+  #navMyWrap {
+    @include navButton();
+  }
+  #navNewWrap {
+    @include navButton();
   }
 }
